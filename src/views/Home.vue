@@ -33,7 +33,7 @@
         <div class="testimonial-stage">
           <Transition name="slide" mode="out-in">
             <div class="testimonial-card" :key="activeIndex">
-              <p class="quote-text">{{ testimonials[activeIndex].text }}</p>
+              <p class="quote-text">{{ testimonials[activeIndex]!.text }}</p>
               <span class="quote-signature">— {{ testimonials[activeIndex]!.author }}</span>
             </div>
           </Transition>
