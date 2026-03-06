@@ -64,7 +64,7 @@
       <div class="about-text">
         <h2>About Dr. Bex</h2>
         <p>
-          Dr. Bex earned her MD from the University of Pennsylvania and has spent 30 years
+          Dr. Bex earned her MD from the University of Pennsylvania and has spent 20 years
           practicing emergency medicine — work that gave her a deep respect for modern
           medicine, and a clear view of where it falls short.
         </p>
@@ -140,9 +140,9 @@ onUnmounted(() => {
 <style scoped>
 .hero {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 48px;
-  padding: 48px;
+  padding: 32px 48px;
   background: var(--p-primary-color);
   color: var(--p-primary-contrast-color);
 }
@@ -182,7 +182,7 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 0;
   min-width: 0;
-  margin-top: 24px;
+  margin-top: 36px;
 }
 
 .testimonials-eyebrow {
@@ -233,10 +233,27 @@ onUnmounted(() => {
 .testimonial-stage {
   padding: 28px 0 0;
   overflow: hidden;
+  min-height: 320px;
 }
 
 .testimonial-card {
   padding: 0;
+}
+
+/* Slide transition */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.35s ease;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
 }
 
 .quote-text {
@@ -259,27 +276,12 @@ onUnmounted(() => {
   margin-top: 16px;
 }
 
-/* Slide transition */
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.35s ease;
-}
-
-.slide-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.slide-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
 
 .approach {
   display: flex;
   align-items: flex-start;
   gap: 48px;
-  padding: 48px;
+  padding: 32px 48px;
   background: var(--p-surface-50);
 }
 
@@ -314,7 +316,7 @@ onUnmounted(() => {
   display: flex;
   align-items: flex-start;
   gap: 48px;
-  padding: 48px;
+  padding: 32px 48px;
   background: var(--p-primary-color);
   color: var(--p-primary-contrast-color);
 }
@@ -356,7 +358,7 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
-    padding: 48px 16px;
+    padding: 32px 16px;
     gap: 32px;
   }
 
@@ -367,13 +369,13 @@ onUnmounted(() => {
   .approach {
     flex-direction: column-reverse;
     align-items: center;
-    padding: 48px 16px;
+    padding: 32px 16px;
     gap: 32px;
   }
 
   .about {
     flex-direction: column;
-    padding: 48px 16px;
+    padding: 32px 16px;
     gap: 32px;
   }
 }
