@@ -87,6 +87,8 @@
 
     <Footer />
   </ParallaxSection>
+
+  <router-link to="/appointments" class="fab">Start Your Journey</router-link>
 </template>
 
 <script setup lang="ts">
@@ -371,5 +373,30 @@ onUnmounted(() => {
     padding: 48px 16px;
     gap: 32px;
   }
+}
+
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--p-primary-color);
+  background: var(--p-surface-50);
+  border: 1px solid var(--p-surface-200);
+  border-radius: 32px;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  z-index: 10;
+}
+
+.fab:hover {
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
 }
 </style>
