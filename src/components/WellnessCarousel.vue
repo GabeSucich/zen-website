@@ -18,9 +18,9 @@
           class="wc-slot"
           :class="{ flipped: slot.flipped }"
           :style="slot.style"
-          @mouseenter="slot.flipped = true"
-          @mouseleave="slot.flipped = false"
-          @click="slot.flipped = !slot.flipped"
+          @pointerenter="onPointerEnter($event, slot)"
+          @pointerleave="onPointerLeave($event, slot)"
+          @click="onCardClick(slot)"
         >
           <div class="wc-shell">
             <div class="wc-flipper">
@@ -164,6 +164,24 @@ function stopTimer() {
     clearInterval(ticker)
     ticker = null
   }
+}
+
+let lastPointerType = 'mouse'
+
+function onPointerEnter(e: PointerEvent, slot: typeof slots[0]) {
+  lastPointerType = e.pointerType
+  if (e.pointerType === 'mouse') slot.flipped = true
+}
+
+function onPointerLeave(e: PointerEvent, slot: typeof slots[0]) {
+  if (e.pointerType === 'mouse') slot.flipped = false
+}
+
+function onCardClick(slot: typeof slots[0]) {
+  if (lastPointerType !== 'mouse') {
+    slot.flipped = !slot.flipped
+  }
+  stopTimer()
 }
 
 onMounted(() => startTimer())
