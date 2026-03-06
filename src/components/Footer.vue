@@ -14,16 +14,7 @@
         <p><a href="tel:+17204171201">(720) 417-1201</a></p>
       </div>
 
-      <div class="footer-col footer-social">
-        <a href="https://www.instagram.com/zenforcewellness" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" />
-            <circle cx="12" cy="12" r="5" />
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-          </svg>
-        </a>
-        <span class="social-handle">@zenforcewellness</span>
-      </div>
+      <div class="footer-col"></div>
 
     </div>
   </footer>

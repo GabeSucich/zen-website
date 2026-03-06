@@ -21,10 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import Menubar from 'primevue/menubar'
 
 const mobileOpen = ref(false)
+const route = useRoute()
+
+watch(() => route.path, () => {
+  mobileOpen.value = false
+})
 </script>
 
 <style scoped>

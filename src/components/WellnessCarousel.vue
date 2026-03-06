@@ -71,29 +71,34 @@ interface Card {
 
 const cards: Card[] = [
   {
-    title: 'Maximize Athleticism & Body Composition',
-    icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M12 2v20M4 10l2 2-2 2M20 10l-2 2 2 2"/></svg>',
-    desc: 'Combine precision hormone optimization, personalized supplementation, and evidence-based coaching to build the body you were meant to have. Whether your goal is peak athletic performance or a leaner, stronger physique, protocols tailored to your biology — not a generic plan — make all the difference.',
+    title: 'Body Composition',
+    icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M16 14H8a4 4 0 0 0-4 4v2h16v-2a4 4 0 0 0-4-4z"/></svg>',
+    desc: 'The number one predictor of dementia is loss of muscle mass. Increasing muscle mass improves not only your aesthetic and metabolism, but your health span and quality of life. Through tailored nutritional and lifestyle coaching, along with a personalized regimen of peptides and supplements, we help you build and maintain the body you need to thrive.',
   },
   {
     title: 'Improve Longevity',
     icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-    desc: "True longevity isn't just about living longer — it's about feeling vital at every age. Advanced peptide therapies, hormone balancing, and targeted IV infusions slow the biological clock and protect the systems that matter most.",
+    desc: "True longevity isn't just about living longer — it's about feeling vital at every age. Advanced peptide therapies, hormone replacement therapy, supplements, and maximizing nutrition slow the biological clock and protect the systems that matter most.",
   },
   {
     title: 'Heal Your Gut',
     icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 5 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
-    desc: 'Your gut is the foundation of nearly every system in your body — from immunity to mood to metabolism. Comprehensive assessments and customized supplementation protocols restore balance, reduce inflammation, and get you feeling like yourself again.',
+    desc: 'Your gut is the foundation of nearly every system in your body — from immunity, to mental health, to metabolic and cardiovascular health. Comprehensive assessments and customized supplementation protocols restore balance, reduce inflammation, and get you feeling like yourself again.',
   },
   {
     title: 'Improve Sexual Health',
     icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
-    desc: 'Hormonal imbalances, stress, and aging can quietly erode your confidence and intimacy. Hormone replacement and peptide therapies restore drive, function, and vitality — so you show up fully in every area of your life.',
+    desc: 'Hormonal imbalances, stress, aging, and poor gut and metabolic health can erode your confidence and comfort with intimacy — from vaginal dryness and erectile dysfunction to diminished sex drive. Hormone replacement and peptide therapies restore function and vitality, so you show up fully in every area of your life.',
   },
   {
     title: 'Boost Immunity',
     icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-    desc: "A resilient immune system doesn't happen by accident — it's built through consistent, proactive care. High-dose IV infusions, targeted supplementation, and evidence-backed wellness protocols give your body the micronutrients it needs to defend, recover, and thrive.",
+    desc: "A resilient immune system doesn't happen by accident — it's built through consistent, proactive care. Targeted supplementation and evidence-backed wellness protocols give your body the micronutrients it needs to defend, recover, and thrive.",
+  },
+  {
+    title: 'Maximize Athleticism',
+    icon: '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M12 2v20M4 10l2 2-2 2M20 10l-2 2 2 2"/></svg>',
+    desc: 'Combine precision hormone optimization, peptide therapy, personalized supplementation, and evidence-based coaching to build the body you were meant to have. Whether your goal is peak athletic performance or a leaner, stronger physique, protocols tailored to your biology — not a generic plan — make all the difference.',
   },
 ]
 

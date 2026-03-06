@@ -51,12 +51,14 @@
         />
       </div>
     </section>
+    <Footer />
   </ParallaxSection>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import ParallaxSection from '@/components/ParallaxSection.vue'
+import Footer from '@/components/Footer.vue'
 import Accordion from 'primevue/accordion'
 import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'

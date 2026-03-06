@@ -76,6 +76,21 @@
 
     </div>
   </section>
+
+  <section class="product-pricing-section">
+    <div class="product-pricing-inner">
+      <p class="product-eyebrow">Product Prices</p>
+      <Divider class="product-divider" />
+      <p class="product-note">Most product pricing will only be available after consults with Dr. Bex. For inquiries into products not listed below, please schedule a consultation.</p>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <span class="product-name">Botox</span>
+          <span class="product-price">$14 <span class="product-unit">per unit</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -314,5 +329,118 @@ sup {
   font-size: 12.5px;
   color: var(--p-surface-600);
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .pricing-section {
+    padding: 16px 12px 80px;
+  }
+
+  .pricing-table {
+    table-layout: fixed;
+  }
+
+  .pricing-table thead th:first-child {
+    width: 22%;
+  }
+
+  .pricing-table thead th {
+    padding: 12px 10px;
+    font-size: 12px;
+  }
+
+  .pricing-table tbody td {
+    padding: 16px 10px;
+    font-size: 13px;
+  }
+
+  .pricing-table tbody td:first-child {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .consult-count {
+    font-size: 1.4rem;
+  }
+
+  .cost-amount {
+    font-size: 1.4rem;
+  }
+}
+
+/* ── Product Prices ── */
+.product-pricing-section {
+  background: var(--p-primary-color);
+  padding: 64px 24px 80px;
+  color: var(--p-surface-50);
+}
+
+.product-pricing-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.product-eyebrow {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--p-surface-300);
+  margin-bottom: 14px;
+}
+
+.product-pricing-section :deep(.p-divider) {
+  width: 30%;
+  margin: 8px 0;
+}
+
+.product-pricing-section :deep(.p-divider::before) {
+  border-color: var(--p-surface-500);
+}
+
+.product-note {
+  font-size: 14px;
+  color: var(--p-surface-400);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.product-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.product-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 28px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  min-width: 280px;
+  flex: 1;
+  max-width: 400px;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--p-surface-100);
+}
+
+.product-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #c9a84c;
+}
+
+.product-unit {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--p-surface-400);
 }
 </style>

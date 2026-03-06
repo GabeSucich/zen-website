@@ -65,19 +65,18 @@
         <h2>About Dr. Bex</h2>
         <p>
           Dr. Bex earned her MD from the University of Pennsylvania and has spent 30 years
-          practicing emergency medicine — work that gave her deep respect for modern
+          practicing emergency medicine — work that gave her a deep respect for modern
           medicine, and a clear view of where it falls short.
         </p>
         <p>
-          What she noticed over time was that many patients weren't just dealing with acute
-          illness. They were tired, depleted, and aging in ways that felt inevitable — but
-          weren't.
+          What she noticed over time was that many patients were experiencing illness that
+          could have been prevented with simple lifestyle changes. With further credentialing
+          and research, this became a passion.
         </p>
         <p>
-          Her own experience with hormone replacement therapy, peptides, and targeted
-          supplementation showed her how much was actually possible. At Zen,
-          she works closely with each patient to build a plan that fits their body, their
-          goals, and where they are in life.
+          She found a new sense of fulfillment in caring for clients where allopathic medicine falls
+          short — listening and working with each individual with the purpose of prevention,
+          not treatment.
         </p>
       </div>
       <div class="about-image">
@@ -88,7 +87,10 @@
     <Footer />
   </ParallaxSection>
 
-  <router-link to="/appointments" class="fab">Start Your Journey</router-link>
+  <router-link to="/appointments" class="fab">
+    <span class="fab-text">Start Your Journey</span>
+    <svg class="fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  </router-link>
 </template>
 
 <script setup lang="ts">
@@ -138,7 +140,7 @@ onUnmounted(() => {
 <style scoped>
 .hero {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 48px;
   padding: 48px;
   background: var(--p-primary-color);
@@ -180,6 +182,7 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 0;
   min-width: 0;
+  margin-top: 24px;
 }
 
 .testimonials-eyebrow {
@@ -379,24 +382,44 @@ onUnmounted(() => {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  padding: 12px 28px;
+  padding: 16px 34px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: 0.3px;
   color: var(--p-primary-color);
-  background: var(--p-surface-50);
-  border: 1px solid var(--p-surface-200);
+  background: #c9a84c;
+  border: none;
   border-radius: 32px;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: background 0.25s, color 0.25s, box-shadow 0.25s;
   z-index: 10;
 }
 
 .fab:hover {
-  background: var(--p-primary-color);
-  color: var(--p-primary-contrast-color);
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
+  background: #b8963e;
+  color: var(--p-primary-color);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.3);
+}
+
+.fab-icon {
+  display: none;
+  width: 26px;
+  height: 26px;
+}
+
+@media (max-width: 768px) {
+  .fab {
+    padding: 16px;
+  }
+
+  .fab-text {
+    display: none;
+  }
+
+  .fab-icon {
+    display: block;
+  }
 }
 </style>
