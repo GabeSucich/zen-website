@@ -19,7 +19,7 @@
           <tr>
             <td>Recommended for</td>
             <td>
-              <p class="recommended-text">Patients who generally know what they want and require lower frequency touch points</p>
+              <p class="recommended-text">Patients who generally know what they want and require less frequent touch points</p>
             </td>
             <td class="membership-cell">
               <p class="recommended-text">Patients looking for a trusted source to help them start their wellness journey</p>
