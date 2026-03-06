@@ -3,9 +3,15 @@
     <div class="footer-inner">
 
       <div class="footer-col">
-        <h3 class="footer-heading">Location</h3>
+        <h3 class="footer-heading">Evergreen, CO</h3>
         <p>32186 Castle Court | Suite 308</p>
         <p>Evergreen, CO 80439</p>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Chicago, IL</h3>
+        <p>2001 North Point St</p>
+        <p>Chicago, IL 60647</p>
       </div>
 
       <div class="footer-col">
@@ -13,8 +19,6 @@
         <p><a href="mailto:drbex@zenforcewellness.com">drbex@zenforcewellness.com</a></p>
         <p><a href="tel:+17204171201">(720) 417-1201</a></p>
       </div>
-
-      <div class="footer-col"></div>
 
     </div>
   </footer>
