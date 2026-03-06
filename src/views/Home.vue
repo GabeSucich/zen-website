@@ -65,16 +65,12 @@
         <h2>About Dr. Bex</h2>
         <p>
           Dr. Bex earned her MD from the University of Pennsylvania and has spent 20 years
-          practicing emergency medicine — work that gave her a deep respect for modern
-          medicine, and a clear view of where it falls short.
+          practicing emergency medicine. This work gave her a deep respect for modern
+          medicine and a clear view of where it falls short.
         </p>
         <p>
-          What she noticed over time was that many patients were experiencing illness that
-          could have been prevented with simple lifestyle changes. With further credentialing
-          and research, this became a passion.
-        </p>
-        <p>
-          She found a new sense of fulfillment in caring for clients where allopathic medicine falls
+          What she noticed over time was that many patients were experiencing illnesses that
+          could have been prevented with simple lifestyle changes. She found a new sense of fulfillment in caring for clients where allopathic medicine falls
           short — listening and working with each individual with the purpose of prevention,
           not treatment.
         </p>
@@ -358,7 +354,7 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
-    padding: 32px 16px;
+    padding: 16px 16px;
     gap: 32px;
   }
 
