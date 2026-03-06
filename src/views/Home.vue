@@ -137,7 +137,7 @@ onUnmounted(() => {
 .hero {
   display: flex;
   align-items: flex-start;
-  gap: 48px;
+  gap: 47px;
   padding: 32px 48px;
   background: var(--p-primary-color);
   color: var(--p-primary-contrast-color);
