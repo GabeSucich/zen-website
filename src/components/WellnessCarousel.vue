@@ -20,6 +20,7 @@
           :style="slot.style"
           @mouseenter="slot.flipped = true"
           @mouseleave="slot.flipped = false"
+          @click="slot.flipped = !slot.flipped"
         >
           <div class="wc-shell">
             <div class="wc-flipper">
