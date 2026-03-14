@@ -40,6 +40,15 @@
         </div>
       </div>
 
+      <!-- New-patient banner -->
+      <div v-if="selected === 'new'" class="new-patient-banner">
+        <p>
+          <b>New patients, please read:</b> Prior to your consultation, you'll receive an email
+          from Charm EHR with a link to register. To get the most out of your time with Dr. Bex,
+          please complete this registration before your meeting time!
+        </p>
+      </div>
+
       <!-- Calendly widgets — always in DOM for preloading -->
       <div v-show="selected" class="widget-wrapper">
         <div
@@ -248,6 +257,22 @@ onUnmounted(() => {
 
 .accordion-link:hover {
   opacity: 0.8;
+}
+
+/* New-patient banner */
+.new-patient-banner {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-left: 3px solid #c9a84c;
+  border-radius: 4px;
+}
+
+.new-patient-banner p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Widget */
