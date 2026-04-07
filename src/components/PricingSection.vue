@@ -71,7 +71,7 @@
       </table>
 
       <div class="pricing-notes">
-        <p><sup>*</sup> First 3 months billed upfront at $1050 to cover initial plan personalization and treatment refinement. Cancel anytime after that.</p>
+        <p><sup>*</sup> First 3 months billed upfront to cover initial plan personalization and treatment refinement. Cancel anytime.</p>
       </div>
 
     </div>
