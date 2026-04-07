@@ -64,14 +64,14 @@
               <span class="cost-note">No commitment required</span>
             </td>
             <td class="membership-cell">
-              <span class="cost-amount">$200 / month <sup>*</sup></span>
+              <span class="cost-amount">$350 / month <sup>*</sup></span>
             </td>
           </tr>
         </tbody>
       </table>
 
       <div class="pricing-notes">
-        <p><sup>*</sup> First 3 months billed upfront at $600 to cover initial plan personalization and treatment refinement. Cancel anytime after that.</p>
+        <p><sup>*</sup> First 3 months billed upfront at $1050 to cover initial plan personalization and treatment refinement. Cancel anytime after that.</p>
       </div>
 
     </div>
