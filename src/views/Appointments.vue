@@ -32,7 +32,7 @@
               <AccordionPanel value="prices">
                 <AccordionHeader>Consultation prices</AccordionHeader>
                 <AccordionContent>
-                  <p>For patients not enrolled in the Zen Membership program, consults are $80 for 30 minutes and $120 for 45 minutes. For more information on membership structure and consult pricing, see <router-link to="/services" class="accordion-link">Services & Pricing</router-link>.</p>
+                  <p>For patients not enrolled in the Zen Membership program, consults are $100 for 30 minutes and $150 for 45 minutes. For more information on membership structure and consult pricing, see <router-link to="/services" class="accordion-link">Services & Pricing</router-link>.</p>
                 </AccordionContent>
               </AccordionPanel>
             </Accordion>
