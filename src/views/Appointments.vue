@@ -62,11 +62,11 @@
           <div class="step">
             <p class="step-question">Would you like to book a remote or in-person appointment?</p>
             <div class="step-options">
-              <button class="option-btn" :class="{ active: modality === 'in-person' }" @click="selectModality('in-person')">
-                In-Person
-              </button>
               <button class="option-btn" :class="{ active: modality === 'remote' }" @click="selectModality('remote')">
                 Remote
+              </button>
+              <button class="option-btn" :class="{ active: modality === 'in-person' }" @click="selectModality('in-person')">
+                In-Person
               </button>
             </div>
           </div>
