@@ -1,33 +1,33 @@
 <template>
   <ParallaxSection :src="mountainsBg">
     <section class="appointments">
-      <!-- Initial selection -->
-      <div v-show="!selected" class="initial-selection">
-        <button class="selection-card" @click="select('new')">
+      <!-- Step 1: Patient type -->
+      <div v-if="!patientType" class="initial-selection">
+        <button class="selection-card" @click="selectPatientType('new')">
           I am a new patient
         </button>
-        <button class="selection-card" @click="select('existing')">
+        <button class="selection-card" @click="selectPatientType('existing')">
           I am a returning patient
         </button>
       </div>
 
-      <!-- Selected view -->
-      <div v-if="selected" class="selected-view">
+      <div v-else class="flow">
+
+        <!-- Info row (always visible) -->
         <div class="info-row">
           <div class="info-left">
-            <h2 class="info-title">{{ selected === 'new' ? 'New Patients' : 'Existing Patients' }}</h2>
-            <a class="switch-link" @click="select(selected === 'new' ? 'existing' : 'new')">
-              {{ selected === 'new' ? "I'm an existing patient" : "I'm a new patient" }}
+            <h2 class="info-title">{{ patientType === 'new' ? 'New Patients' : 'Existing Patients' }}</h2>
+            <a class="switch-link" @click="selectPatientType(patientType === 'new' ? 'existing' : 'new')">
+              {{ patientType === 'new' ? "I'm an existing patient" : "I'm a new patient" }}
             </a>
           </div>
 
           <div class="info-divider" />
 
           <div class="info-right">
-            <p v-if="selected === 'new'" class="info-desc">
+            <p v-if="patientType === 'new'" class="info-desc">
               Book a free 45 minute consultation with Dr. Bex, or an appointment for any other available service.
             </p>
-
             <Accordion v-else>
               <AccordionPanel value="prices">
                 <AccordionHeader>Consultation prices</AccordionHeader>
@@ -38,26 +38,72 @@
             </Accordion>
           </div>
         </div>
-      </div>
 
-      <!-- New-patient banner -->
-      <div v-if="selected === 'new'" class="new-patient-banner">
-        <p>
-          <b>New patients, please read:</b> Prior to your consultation, you'll receive an email
-          from Charm EHR with a link to register. To get the most out of your time with Dr. Bex,
-          please complete this registration before your meeting time!
-        </p>
-      </div>
+        <!-- Widget view -->
+        <div v-if="calendlyUrl" class="widget-view">
+          <a class="modify-link" @click="appointmentType = null">← Modify my booking</a>
 
-      <!-- Calendly widgets — always in DOM for preloading -->
-      <div v-show="selected" class="widget-wrapper">
-        <div
-          v-for="type in (['new', 'existing'] as const)"
-          :key="type"
-          :ref="(el) => (widgetRefs[type] = el as HTMLElement)"
-          class="form-container"
-          :class="{ visible: selected === type && ready[type] }"
-        />
+          <div v-if="patientType === 'new'" class="new-patient-banner">
+            <p>
+              <b>New patients, please read:</b> Prior to your consultation, you'll receive an email
+              from Charm EHR with a link to register. To get the most out of your time with Dr. Bex,
+              please complete this registration before your meeting time!
+            </p>
+          </div>
+
+          <div class="widget-wrapper">
+            <div ref="widgetRef" class="form-container" :class="{ visible: widgetReady }" />
+          </div>
+        </div>
+
+        <!-- Questions UI -->
+        <template v-else>
+          <!-- Step 2: Modality -->
+          <div class="step">
+            <p class="step-question">Would you like to book a remote or in-person appointment?</p>
+            <div class="step-options">
+              <button class="option-btn" :class="{ active: modality === 'in-person' }" @click="selectModality('in-person')">
+                In-Person
+              </button>
+              <button class="option-btn" :class="{ active: modality === 'remote' }" @click="selectModality('remote')">
+                Remote
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Location (in-person only) -->
+          <div v-if="modality === 'in-person'" class="step">
+            <p class="step-question">At which location would you like to book?</p>
+            <div class="step-options">
+              <button
+                v-for="loc in LOCATIONS"
+                :key="loc.value"
+                class="option-btn"
+                :class="{ active: location === loc.value }"
+                @click="selectLocation(loc.value)"
+              >
+                {{ loc.label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Appointment type -->
+          <div v-if="showAppointmentStep" class="step">
+            <p class="step-question">What type of appointment are you interested in?</p>
+            <div class="step-options">
+              <button
+                v-for="appt in availableAppointmentTypes"
+                :key="appt.value"
+                class="option-btn"
+                :class="{ active: appointmentType === appt.value }"
+                @click="selectAppointmentType(appt.value)"
+              >
+                {{ appt.label }}
+              </button>
+            </div>
+          </div>
+        </template>
+
       </div>
     </section>
     <Footer />
@@ -65,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
 import ParallaxSection from '@/components/ParallaxSection.vue'
 import Footer from '@/components/Footer.vue'
 import Accordion from 'primevue/accordion'
@@ -74,24 +120,89 @@ import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
 import mountainsBg from '@/assets/mountains.jpg'
 
-const URLS: Record<string, string> = {
-  new: 'https://calendly.com/d/cydc-x9r-v8j?primary_color=0D1E2B',
-  existing: 'https://calendly.com/d/cxpk-zy7-bg8?primary_color=0D1E2B',
+type PatientType = 'new' | 'existing'
+type Modality = 'remote' | 'in-person'
+type Location = 'chicago' | 'evergreen' | 'centennial'
+type AppointmentType = 'free-consultation' | 'follow-up' | 'pellet' | 'botox' | 'iv-therapy'
+
+const LOCATIONS: { value: Location; label: string }[] = [
+  { value: 'evergreen', label: 'Evergreen' },
+  { value: 'centennial', label: 'Centennial' },
+  { value: 'chicago', label: 'Chicago' },
+]
+
+const APPOINTMENT_LABELS: Record<AppointmentType, string> = {
+  'free-consultation': 'Free Initial Consultation',
+  'follow-up': 'Follow-Up Consultation',
+  'pellet': 'Pellet Insertion',
+  'botox': 'Botox / Filler',
+  'iv-therapy': 'IV Therapy',
 }
 
-type PatientType = 'new' | 'existing'
+const AVAILABLE_APPOINTMENTS: Record<string, AppointmentType[]> = {
+  'new-remote':     ['free-consultation'],
+  'new-chicago':    ['free-consultation', 'botox'],
+  'new-evergreen':  ['free-consultation', 'iv-therapy', 'botox', 'pellet'],
+  'new-centennial': ['free-consultation'],
+  'existing-remote':     ['follow-up'],
+  'existing-chicago':    ['follow-up', 'botox', 'pellet'],
+  'existing-evergreen':  ['follow-up', 'iv-therapy', 'botox', 'pellet'],
+  'existing-centennial': ['follow-up', 'pellet'],
+}
 
-const selected = ref<PatientType | null>(null)
-const ready = reactive({ new: false, existing: false })
-const widgetRefs: Record<string, HTMLElement | null> = { new: null, existing: null }
-const observers: MutationObserver[] = []
+const CALENDLY_URLS: Record<string, string> = {
+  'new-remote-free-consultation':      'https://calendly.com/drbex-zenforcewellness/free-consultation-video-call',
+  'new-chicago-free-consultation':     'https://calendly.com/drbex-zenforcewellness/free-consultation-in-person-chicago',
+  'new-chicago-botox':                 'https://calendly.com/drbex-zenforcewellness/botox-filler-chicago',
+  'new-evergreen-free-consultation':   'https://calendly.com/drbex-zenforcewellness/free-consultation-in-person-colorado',
+  'new-evergreen-iv-therapy':          'https://calendly.com/drbex-zenforcewellness/iv-therapy-evergreen',
+  'new-evergreen-botox':               'https://calendly.com/drbex-zenforcewellness/botox-filler-evergreen',
+  'new-evergreen-pellet':              'https://calendly.com/drbex-zenforcewellness/pellet-insertion-evergreen',
+  'new-centennial-free-consultation':  'https://calendly.com/drbex-zenforcewellness/free-initial-consultation-in-person-centennial',
+  'existing-remote-follow-up':         'https://calendly.com/drbex-zenforcewellness/follow-up-video-phone-call',
+  'existing-chicago-follow-up':        'https://calendly.com/drbex-zenforcewellness/follow-up-consultation-in-person-chicago',
+  'existing-chicago-botox':            'https://calendly.com/drbex-zenforcewellness/botox-filler-chicago',
+  'existing-chicago-pellet':           'https://calendly.com/drbex-zenforcewellness/pellet-insertion-chicago',
+  'existing-evergreen-follow-up':      'https://calendly.com/drbex-zenforcewellness/follow-up-consultation-in-person-evergreen',
+  'existing-evergreen-iv-therapy':     'https://calendly.com/drbex-zenforcewellness/iv-therapy-evergreen',
+  'existing-evergreen-botox':          'https://calendly.com/drbex-zenforcewellness/botox-filler-evergreen',
+  'existing-evergreen-pellet':         'https://calendly.com/drbex-zenforcewellness/pellet-insertion-evergreen',
+  'existing-centennial-follow-up':     'https://calendly.com/drbex-zenforcewellness/follow-up-consultation-in-person-centennial',
+  'existing-centennial-pellet':        'https://calendly.com/drbex-zenforcewellness/pellet-insertion-centennial',
+}
+
+const patientType = ref<PatientType | null>(null)
+const modality = ref<Modality | null>(null)
+const location = ref<Location | null>(null)
+const appointmentType = ref<AppointmentType | null>(null)
+const widgetRef = ref<HTMLElement | null>(null)
+const widgetReady = ref(false)
+let currentObserver: MutationObserver | null = null
+
+const contextKey = computed<string | null>(() => {
+  if (!patientType.value || !modality.value) return null
+  if (modality.value === 'in-person' && !location.value) return null
+  const loc = modality.value === 'remote' ? 'remote' : location.value
+  return `${patientType.value}-${loc}`
+})
+
+const showAppointmentStep = computed(() => contextKey.value !== null)
+
+const availableAppointmentTypes = computed(() =>
+  (contextKey.value ? AVAILABLE_APPOINTMENTS[contextKey.value] ?? [] : []).map((v) => ({
+    value: v,
+    label: APPOINTMENT_LABELS[v],
+  }))
+)
+
+const calendlyUrl = computed<string | null>(() => {
+  if (!contextKey.value || !appointmentType.value) return null
+  return CALENDLY_URLS[`${contextKey.value}-${appointmentType.value}`] ?? null
+})
 
 function loadCalendlyScript(): Promise<void> {
   return new Promise((resolve) => {
-    if ((window as any).Calendly) {
-      resolve()
-      return
-    }
+    if ((window as any).Calendly) { resolve(); return }
     const script = document.createElement('script')
     script.src = 'https://assets.calendly.com/assets/external/widget.js'
     script.async = true
@@ -100,41 +211,61 @@ function loadCalendlyScript(): Promise<void> {
   })
 }
 
-function initWidget(type: PatientType) {
-  const el = widgetRefs[type]
-  if (!el) return
+function clearWidget() {
+  currentObserver?.disconnect()
+  currentObserver = null
+  if (widgetRef.value) widgetRef.value.innerHTML = ''
+  widgetReady.value = false
+}
 
-  const observer = new MutationObserver(() => {
-    const iframe = el.querySelector('iframe')
+async function initWidget(url: string) {
+  await loadCalendlyScript()
+  await nextTick()
+  if (!widgetRef.value) return
+
+  clearWidget()
+
+  currentObserver = new MutationObserver(() => {
+    const iframe = widgetRef.value?.querySelector('iframe')
     if (iframe) {
-      observer.disconnect()
-      iframe.addEventListener('load', () => {
-        ready[type] = true
-      })
+      currentObserver?.disconnect()
+      currentObserver = null
+      iframe.addEventListener('load', () => { widgetReady.value = true })
     }
   })
-  observer.observe(el, { childList: true, subtree: true })
-  observers.push(observer)
+  currentObserver.observe(widgetRef.value, { childList: true, subtree: true })
 
-  ;(window as any).Calendly.initInlineWidget({
-    url: URLS[type],
-    parentElement: el,
-  })
+  ;(window as any).Calendly.initInlineWidget({ url, parentElement: widgetRef.value })
 }
 
-function select(type: PatientType) {
-  selected.value = type
+watch(calendlyUrl, (url) => {
+  if (url) initWidget(url)
+  else clearWidget()
+})
+
+function selectPatientType(type: PatientType) {
+  patientType.value = type
+  modality.value = null
+  location.value = null
+  appointmentType.value = null
 }
 
-onMounted(async () => {
-  await loadCalendlyScript()
-  initWidget('new')
-  initWidget('existing')
-})
+function selectModality(m: Modality) {
+  modality.value = m
+  location.value = null
+  appointmentType.value = null
+}
 
-onUnmounted(() => {
-  observers.forEach((o) => o.disconnect())
-})
+function selectLocation(loc: Location) {
+  location.value = loc
+  appointmentType.value = null
+}
+
+function selectAppointmentType(appt: AppointmentType) {
+  appointmentType.value = appt
+}
+
+onUnmounted(() => { currentObserver?.disconnect() })
 </script>
 
 <style scoped>
@@ -145,7 +276,7 @@ onUnmounted(() => {
   min-height: 100vh;
 }
 
-/* Initial selection */
+/* Step 1: initial patient-type selection */
 .initial-selection {
   display: flex;
   gap: 2rem;
@@ -171,6 +302,38 @@ onUnmounted(() => {
   background: var(--p-surface-50);
   color: var(--p-primary-color);
   border-color: var(--p-surface-50);
+}
+
+/* Flow (steps 2–4 + widget) */
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Widget view */
+.widget-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 0.25rem;
+}
+
+/* Modify booking link */
+.modify-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.7;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.modify-link:hover {
+  opacity: 1;
 }
 
 /* Info row */
@@ -229,7 +392,6 @@ onUnmounted(() => {
   margin: 0;
 }
 
-/* Accordion overrides for dark background */
 .info-right :deep(.p-accordion) {
   width: 100%;
 }
@@ -250,6 +412,51 @@ onUnmounted(() => {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Individual step */
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.step-question {
+  margin: 0.5rem 0 0;
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.step-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.option-btn {
+  padding: 0.75rem 1.75rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.option-btn.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+}
+
 .accordion-link {
   color: #fff;
   text-decoration: underline;
@@ -259,9 +466,8 @@ onUnmounted(() => {
   opacity: 0.8;
 }
 
-/* New-patient banner */
+/* New patient banner */
 .new-patient-banner {
-  margin-top: 1.5rem;
   padding: 1rem 1.25rem;
   background: rgba(255, 255, 255, 0.08);
   border-left: 3px solid #c9a84c;
@@ -278,7 +484,6 @@ onUnmounted(() => {
 /* Widget */
 .widget-wrapper {
   position: relative;
-  margin-top: 0;
   min-height: 700px;
 }
 
@@ -329,6 +534,5 @@ onUnmounted(() => {
   .info-right {
     width: 100%;
   }
-
 }
 </style>
