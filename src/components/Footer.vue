@@ -2,27 +2,38 @@
   <footer class="site-footer">
     <div class="footer-inner">
 
-      <div class="footer-col">
-        <h3 class="footer-heading">Evergreen, CO</h3>
-        <p>32186 Castle Court | Suite 308</p>
-        <p>Evergreen, CO 80439</p>
+      <div class="footer-side">
+        <div v-if="!siteConfig.isSoulspace" class="footer-col">
+          <h3 class="footer-heading">Location</h3>
+          <p>32186 Castle Court | Suite 308</p>
+          <p>Evergreen, CO 80439</p>
+        </div>
+
+        <div v-if="siteConfig.isSoulspace" class="footer-col">
+          <h3 class="footer-heading">Location</h3>
+          <p>2001 North Point St</p>
+          <p>Chicago, IL 60647</p>
+        </div>
       </div>
 
-      <div class="footer-col">
-        <h3 class="footer-heading">Chicago, IL</h3>
-        <p>2001 North Point St</p>
-        <p>Chicago, IL 60647</p>
-      </div>
-
-      <div class="footer-col">
+      <div class="footer-col footer-center">
         <h3 class="footer-heading">Contact</h3>
-        <p><a href="mailto:drbex@zenforcewellness.com">drbex@zenforcewellness.com</a></p>
+        <p><a :href="`mailto:${siteConfig.email}`">{{ siteConfig.email }}</a></p>
         <p><a href="tel:+17204171201">(720) 417-1201</a></p>
       </div>
+
+      <div class="footer-side" />
 
     </div>
   </footer>
 </template>
+
+<script setup lang="ts">
+import { inject } from 'vue'
+import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+
+const siteConfig: SiteConfig = inject(siteConfigKey)!
+</script>
 
 <style scoped>
 .site-footer {
@@ -37,12 +48,19 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 8rem;
 }
+
+.footer-side {
+  flex: 1;
+}
+
 
 .footer-col {
   display: flex;
   flex-direction: column;
   gap: 0;
+  text-align: center;
 }
 
 .footer-heading {

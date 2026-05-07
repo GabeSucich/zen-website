@@ -3,8 +3,8 @@
     <Menubar>
       <template #start>
         <router-link to="/" class="brand">
-          <img src="@/assets/logo.png" alt="Zen Aesthetics and Wellness" class="brand-logo" />
-          <span class="brand-name">Zen Aesthetics and Wellness</span>
+          <img src="@/assets/logo.png" :alt="siteConfig.siteName" class="brand-logo" />
+          <span class="brand-name">{{ siteConfig.siteName }}</span>
         </router-link>
       </template>
       <template #end>
@@ -21,9 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import Menubar from 'primevue/menubar'
+import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+
+const siteConfig: SiteConfig = inject(siteConfigKey)!
 
 const mobileOpen = ref(false)
 const route = useRoute()

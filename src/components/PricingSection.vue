@@ -12,7 +12,7 @@
           <tr>
             <th></th>
             <th class="col-paypervisit">Pay-per-consult</th>
-            <th class="col-membership">Zen Membership</th>
+            <th class="col-membership">{{ siteConfig.membershipName }}</th>
           </tr>
         </thead>
         <tbody>
@@ -94,7 +94,11 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from 'vue'
 import Divider from 'primevue/divider'
+import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+
+const siteConfig: SiteConfig = inject(siteConfigKey)!
 </script>
 
 <style scoped>

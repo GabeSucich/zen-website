@@ -54,7 +54,7 @@
           telling you and take meaningful action.
         </p>
         <p>
-          Browse just a few of the ways that Zen can help you become
+          Browse just a few of the ways that {{ siteConfig.siteName }} can help you become
           the best version of yourself.
         </p>
       </div>
@@ -76,7 +76,7 @@
         </p>
       </div>
       <div class="about-image">
-        <img :src="officeBg" alt="Zen Aesthetics and Wellness office" />
+        <img :src="officeBg" :alt="`${siteConfig.siteName} office`" />
       </div>
     </section>
 
@@ -90,8 +90,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, inject, onMounted, onUnmounted } from 'vue'
 import ParallaxSection from '@/components/ParallaxSection.vue'
+import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+
+const siteConfig: SiteConfig = inject(siteConfigKey)!
 import WellnessCarousel from '@/components/WellnessCarousel.vue'
 import Footer from '@/components/Footer.vue'
 import mountainsBg from '@/assets/mountains.jpg'
