@@ -1,5 +1,5 @@
 <template>
-  <p class="site-legal">{{ siteConfig.siteName }} operates out of the state of {{ siteConfig.state }}. Doctor Bex is a licensed medical practitioner in the state of {{ siteConfig.state }}.</p>
+  <p class="site-legal">{{ siteConfig.siteName }} operates out of the state of {{ siteConfig.state }}. Doctor Bex is a licensed medical practitioner in the states of Colorado and Illinois.</p>
   <footer class="site-footer">
     <div class="footer-inner">
 
