@@ -5,6 +5,7 @@ const ZEN_CONFIG: SiteConfig = {
   siteName: 'Zen Aesthetics and Wellness',
   membershipName: 'Zen Membership',
   email: 'drbex@zenforcewellness.com',
+  state: 'Colorado',
 }
 
 const SOULSPACE_CONFIG: SiteConfig = {
@@ -12,6 +13,7 @@ const SOULSPACE_CONFIG: SiteConfig = {
   siteName: 'Soul Space Chicago',
   membershipName: 'Soul Space Membership',
   email: 'drbex@soulspacechicago.com',
+  state: 'Illinois',
 }
 
 export function useSiteConfig(): SiteConfig {

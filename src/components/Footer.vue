@@ -1,4 +1,5 @@
 <template>
+  <p class="site-legal">{{ siteConfig.siteName }} operates out of the state of {{ siteConfig.state }}. Doctor Bex is a licensed medical practitioner in the state of {{ siteConfig.state }}.</p>
   <footer class="site-footer">
     <div class="footer-inner">
 
@@ -22,7 +23,10 @@
         <p><a href="tel:+17204171201">(720) 417-1201</a></p>
       </div>
 
-      <div class="footer-side" />
+      <div class="footer-side footer-col">
+        <h3 class="footer-heading">Legal</h3>
+        <p><a href="/privacy" class="footer-legal-link">Privacy Policy</a></p>
+      </div>
 
     </div>
   </footer>
@@ -82,6 +86,10 @@ const siteConfig: SiteConfig = inject(siteConfigKey)!
   transition: opacity 0.2s;
 }
 
+.footer-col a.footer-legal-link {
+  text-decoration: underline;
+}
+
 .footer-col a:hover {
   opacity: 0.6;
 }
@@ -101,6 +109,17 @@ const siteConfig: SiteConfig = inject(siteConfigKey)!
 .social-handle {
   font-size: 0.85rem;
   opacity: 0.8;
+}
+
+.site-legal {
+  text-align: center;
+  font-size: 0.75rem;
+  font-style: italic;
+  background: var(--p-primary-color);
+  color: white;
+  opacity: 0.8;
+  padding: 8px 16px;
+  margin: 0;
 }
 
 @media (max-width: 768px) {

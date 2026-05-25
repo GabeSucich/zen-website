@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import Appointments from '../views/Appointments.vue'
+import Privacy from '../views/Privacy.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -9,6 +10,7 @@ const router = createRouter({
     { path: '/', component: Home },
     { path: '/services', component: Services },
     { path: '/appointments', component: Appointments },
+    { path: '/privacy', component: Privacy },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })

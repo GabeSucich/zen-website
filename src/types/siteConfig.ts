@@ -5,6 +5,7 @@ export interface SiteConfig {
   siteName: string
   membershipName: string
   email: string
+  state: string
 }
 
 export const siteConfigKey = Symbol('siteConfig') as InjectionKey<SiteConfig>
