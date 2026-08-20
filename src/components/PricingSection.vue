@@ -30,11 +30,11 @@
             <td>
               <div class="consult-item">
                 <span class="consult-duration">30 minutes</span>
-                <span class="consult-price">$100</span>
+                <span class="consult-price">${{ siteConfig.consultPrice30 }}</span>
               </div>
               <div class="consult-item">
                 <span class="consult-duration">45 minutes</span>
-                <span class="consult-price">$150</span>
+                <span class="consult-price">${{ siteConfig.consultPrice45 }}</span>
               </div>
             </td>
             <td class="membership-cell">

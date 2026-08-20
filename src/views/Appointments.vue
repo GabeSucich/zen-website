@@ -32,7 +32,7 @@
               <AccordionPanel value="prices">
                 <AccordionHeader>Consultation prices</AccordionHeader>
                 <AccordionContent>
-                  <p>For patients not enrolled in the Zen Membership program, consults are $100 for 30 minutes and $150 for 45 minutes. For more information on membership structure and consult pricing, see <router-link to="/services" class="accordion-link">Services & Pricing</router-link>.</p>
+                  <p>For patients not enrolled in the {{ siteConfig.membershipName }} program, consults are ${{ siteConfig.consultPrice30 }} for 30 minutes and ${{ siteConfig.consultPrice45 }} for 45 minutes. For more information on membership structure and consult pricing, see <router-link to="/services" class="accordion-link">Services & Pricing</router-link>.</p>
                 </AccordionContent>
               </AccordionPanel>
             </Accordion>
@@ -111,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, onUnmounted } from 'vue'
+import { ref, computed, watch, nextTick, onUnmounted, inject } from 'vue'
 import ParallaxSection from '@/components/ParallaxSection.vue'
 import Footer from '@/components/Footer.vue'
 import Accordion from 'primevue/accordion'
@@ -119,6 +119,9 @@ import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
 import mountainsBg from '@/assets/mountains.jpg'
+import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+
+const siteConfig: SiteConfig = inject(siteConfigKey)!
 
 type PatientType = 'new' | 'existing'
 type Modality = 'remote' | 'in-person'

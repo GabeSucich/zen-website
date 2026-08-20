@@ -1,11 +1,18 @@
 import type { SiteConfig } from '@/types/siteConfig'
 
+/** Consult pricing is currently identical across sites; spread in so one edit updates both. */
+const CONSULT_PRICING = {
+  consultPrice30: 125,
+  consultPrice45: 190,
+}
+
 const ZEN_CONFIG: SiteConfig = {
   isSoulspace: false,
   siteName: 'Zen Aesthetics and Wellness',
   membershipName: 'Zen Membership',
   email: 'drbex@zenforcewellness.com',
   state: 'Colorado',
+  ...CONSULT_PRICING,
 }
 
 const SOULSPACE_CONFIG: SiteConfig = {
@@ -14,6 +21,7 @@ const SOULSPACE_CONFIG: SiteConfig = {
   membershipName: 'Soul Space Membership',
   email: 'drbex@soulspacechicago.com',
   state: 'Illinois',
+  ...CONSULT_PRICING,
 }
 
 export function useSiteConfig(): SiteConfig {
