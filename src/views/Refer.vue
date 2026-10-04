@@ -7,9 +7,19 @@
         <template v-if="!link">
           <p class="refer-desc">
             Know someone who would love {{ siteConfig.siteName }}? Enter your details to get your
-            personal referral link. When a friend books their first appointment through it, we'll
-            thank you with a reward.
+            personal referral link.
           </p>
+
+          <ul class="perks">
+            <li>
+              <i class="pi pi-gift" />
+              <span><strong>You get 20% off a purchase</strong> for every friend who makes a purchase through your link.</span>
+            </li>
+            <li>
+              <i class="pi pi-heart" />
+              <span><strong>Your friends get a free consultation</strong> and 20% off their next purchase.</span>
+            </li>
+          </ul>
 
           <form class="refer-form" novalidate @submit.prevent="submit">
             <div class="field-row">
@@ -43,8 +53,8 @@
 
         <template v-else>
           <p class="refer-desc">
-            Thanks, {{ firstName.trim() }}! Here's your personal link. Share it with friends, and
-            we'll be in touch when someone books their first appointment with it.
+            Thanks, {{ firstName.trim() }}! Here's your personal link. Share it with friends: for
+            every friend who makes a purchase through it, you'll get 20% off a purchase.
           </p>
 
           <div class="link-box">
@@ -178,6 +188,31 @@ async function share() {
   line-height: 1.7;
   opacity: 0.85;
   margin: 0;
+}
+
+.perks {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #c9a84c;
+  border-radius: 4px;
+}
+
+.perks li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.perks i {
+  color: #c9a84c;
+  flex-shrink: 0;
 }
 
 .refer-form {
