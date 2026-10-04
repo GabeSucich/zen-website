@@ -126,12 +126,11 @@ const siteConfig: SiteConfig = inject(siteConfigKey)!
 
 type PatientType = 'new' | 'existing'
 type Modality = 'remote' | 'in-person'
-type Location = 'chicago' | 'evergreen' | 'centennial'
-type AppointmentType = 'free-consultation' | 'follow-up' | 'pellet' | 'botox' | 'iv-therapy'
+type Location = 'chicago' | 'evergreen'
+type AppointmentType = 'free-consultation' | 'follow-up' | 'pellet' | 'botox'
 
 const LOCATIONS: { value: Location; label: string }[] = [
   { value: 'evergreen', label: 'Evergreen' },
-  { value: 'centennial', label: 'Centennial' },
   { value: 'chicago', label: 'Chicago' },
 ]
 
@@ -140,18 +139,15 @@ const APPOINTMENT_LABELS: Record<AppointmentType, string> = {
   'follow-up': 'Follow-Up Consultation',
   'pellet': 'Pellet Insertion',
   'botox': 'Botox / Filler',
-  'iv-therapy': 'IV Therapy',
 }
 
 const AVAILABLE_APPOINTMENTS: Record<string, AppointmentType[]> = {
   'new-remote':     ['free-consultation'],
   'new-chicago':    ['free-consultation', 'botox'],
-  'new-evergreen':  ['free-consultation', 'iv-therapy', 'botox', 'pellet'],
-  'new-centennial': ['free-consultation'],
+  'new-evergreen':  ['free-consultation', 'botox', 'pellet'],
   'existing-remote':     ['follow-up'],
   'existing-chicago':    ['follow-up', 'botox', 'pellet'],
-  'existing-evergreen':  ['follow-up', 'iv-therapy', 'botox', 'pellet'],
-  'existing-centennial': ['follow-up', 'pellet'],
+  'existing-evergreen':  ['follow-up', 'botox', 'pellet'],
 }
 
 const CALENDLY_URLS: Record<string, string> = {
@@ -159,23 +155,19 @@ const CALENDLY_URLS: Record<string, string> = {
   'new-chicago-free-consultation':     'https://calendly.com/drbex-zenforcewellness/free-consultation-in-person-chicago',
   'new-chicago-botox':                 'https://calendly.com/drbex-zenforcewellness/botox-filler-chicago',
   'new-evergreen-free-consultation':   'https://calendly.com/drbex-zenforcewellness/free-consultation-in-person-colorado',
-  'new-evergreen-iv-therapy':          'https://calendly.com/drbex-zenforcewellness/iv-therapy-evergreen',
   'new-evergreen-botox':               'https://calendly.com/drbex-zenforcewellness/botox-filler-evergreen',
   'new-evergreen-pellet':              'https://calendly.com/drbex-zenforcewellness/pellet-insertion-evergreen',
-  'new-centennial-free-consultation':  'https://calendly.com/drbex-zenforcewellness/free-initial-consultation-in-person-centennial',
   'existing-remote-follow-up':         'https://calendly.com/drbex-zenforcewellness/follow-up-video-phone-call',
   'existing-chicago-follow-up':        'https://calendly.com/drbex-zenforcewellness/follow-up-consultation-in-person-chicago',
   'existing-chicago-botox':            'https://calendly.com/drbex-zenforcewellness/botox-filler-chicago',
   'existing-chicago-pellet':           'https://calendly.com/drbex-zenforcewellness/pellet-insertion-chicago',
   'existing-evergreen-follow-up':      'https://calendly.com/drbex-zenforcewellness/follow-up-consultation-in-person-evergreen',
-  'existing-evergreen-iv-therapy':     'https://calendly.com/drbex-zenforcewellness/iv-therapy-evergreen',
   'existing-evergreen-botox':          'https://calendly.com/drbex-zenforcewellness/botox-filler-evergreen',
   'existing-evergreen-pellet':         'https://calendly.com/drbex-zenforcewellness/pellet-insertion-evergreen',
-  'existing-centennial-follow-up':     'https://calendly.com/drbex-zenforcewellness/follow-up-consultation-in-person-centennial',
-  'existing-centennial-pellet':        'https://calendly.com/drbex-zenforcewellness/pellet-insertion-centennial',
 }
 
-const patientType = ref<PatientType | null>(null)
+// Referred visitors are new patients, so skip the new/returning choice for them
+const patientType = ref<PatientType | null>(getReferralCode() ? 'new' : null)
 const modality = ref<Modality | null>(null)
 const location = ref<Location | null>(null)
 const appointmentType = ref<AppointmentType | null>(null)

@@ -24,16 +24,16 @@
           <form class="refer-form" novalidate @submit.prevent="submit">
             <div class="field-row">
               <label class="field">
-                <span>First name</span>
+                <span>Your first name</span>
                 <input v-model="firstName" type="text" autocomplete="given-name" required maxlength="100" />
               </label>
               <label class="field">
-                <span>Last name</span>
+                <span>Your last name</span>
                 <input v-model="lastName" type="text" autocomplete="family-name" required maxlength="100" />
               </label>
             </div>
             <label class="field">
-              <span>Email</span>
+              <span>Your email</span>
               <input v-model="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" />
             </label>
 
