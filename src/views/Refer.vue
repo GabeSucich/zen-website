@@ -12,12 +12,12 @@
 
           <ul class="perks">
             <li>
-              <i class="pi pi-gift" />
-              <span><strong>You get 20% off a purchase</strong> for every friend who makes a purchase through your link.</span>
+              <i class="pi pi-heart" />
+              <span><strong>Anyone you refer gets 20% off</strong> their first purchase with Dr. Bex.</span>
             </li>
             <li>
-              <i class="pi pi-heart" />
-              <span><strong>Your friends get a free consultation</strong> and 20% off their next purchase.</span>
+              <i class="pi pi-gift" />
+              <span><strong>You get 20% off your next purchase</strong> for every referral who becomes a client.</span>
             </li>
           </ul>
 
@@ -53,8 +53,8 @@
 
         <template v-else>
           <p class="refer-desc">
-            Thanks, {{ firstName.trim() }}! Here's your personal link. Share it with friends: for
-            every friend who makes a purchase through it, you'll get 20% off a purchase.
+            Thanks, {{ firstName.trim() }}! Here's your personal link. Share it with friends: you'll
+            get 20% off your next purchase for every referral who becomes a client.
           </p>
 
           <div class="link-box">
@@ -204,7 +204,7 @@ async function share() {
 
 .perks li {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.75rem;
   font-size: 0.95rem;
   line-height: 1.6;

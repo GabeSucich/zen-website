@@ -62,7 +62,7 @@ export function previewTags(url: URL, referrer: string | null = null): string {
     ? referrer ? `${referrer} has invited you to ${site.name}` : `You're invited to ${site.name}`
     : site.name
   const description = isReferral
-    ? `Use my link to book a free consultation and get 20% off your next purchase with ${site.name}.`
+    ? `Use my link to book a free consultation and get 20% off your first purchase with ${site.name}.`
     : site.description
 
   const tags: [string, string, string][] = [
@@ -79,7 +79,7 @@ export function previewTags(url: URL, referrer: string | null = null): string {
       ['property', 'og:image', image],
       ['property', 'og:image:width', '1200'],
       ['property', 'og:image:height', '630'],
-      ['property', 'og:image:alt', `Book a free consultation and get 20% off your next purchase with ${site.name}. Book now.`],
+      ['property', 'og:image:alt', `Book a free consultation and get 20% off your first purchase with ${site.name}. Book now.`],
       ['name', 'twitter:card', 'summary_large_image'],
       ['name', 'twitter:image', image],
     )
