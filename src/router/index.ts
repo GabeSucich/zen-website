@@ -4,7 +4,6 @@ import Services from '../views/Services.vue'
 import Appointments from '../views/Appointments.vue'
 import Privacy from '../views/Privacy.vue'
 import Refer from '../views/Refer.vue'
-import { referralsEnabled } from '../composables/useFeatureFlags'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,7 +12,7 @@ const router = createRouter({
     { path: '/services', component: Services },
     { path: '/appointments', component: Appointments },
     { path: '/privacy', component: Privacy },
-    { path: '/refer', component: Refer, beforeEnter: () => (referralsEnabled ? true : '/') },
+    { path: '/refer', component: Refer },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })
