@@ -46,7 +46,7 @@
             <p v-if="error" class="form-error" role="alert">{{ error }}</p>
 
             <button type="submit" class="primary-btn" :disabled="submitting">
-              {{ submitting ? 'Creating your link…' : 'Get my referral link' }}
+              {{ submitting ? 'Creating your link…' : 'Get referral link' }}
             </button>
           </form>
         </template>
