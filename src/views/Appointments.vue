@@ -120,6 +120,7 @@ import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
 import mountainsBg from '@/assets/mountains.jpg'
 import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+import { getReferralCode } from '@/composables/useReferral'
 
 const siteConfig: SiteConfig = inject(siteConfigKey)!
 
@@ -238,7 +239,13 @@ async function initWidget(url: string) {
   })
   currentObserver.observe(widgetRef.value, { childList: true, subtree: true })
 
-  ;(window as any).Calendly.initInlineWidget({ url, parentElement: widgetRef.value })
+  // Calendly stores UTM values on the booking; the backend webhook reads them to record the referral
+  const refCode = getReferralCode()
+  const utm = refCode
+    ? { utmSource: 'referral', utmContent: refCode, utmMedium: patientType.value ?? undefined }
+    : {}
+
+  ;(window as any).Calendly.initInlineWidget({ url, parentElement: widgetRef.value, utm })
 }
 
 watch(calendlyUrl, (url) => {

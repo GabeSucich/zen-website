@@ -7,9 +7,11 @@
 import { provide } from 'vue'
 import Header from './components/Header.vue'
 import { useSiteConfig } from './composables/useSiteConfig'
+import { captureReferralCode } from './composables/useReferral'
 import { siteConfigKey } from './types/siteConfig'
 
 const siteConfig = useSiteConfig()
 provide(siteConfigKey, siteConfig)
 document.title = siteConfig.siteName
+captureReferralCode()
 </script>

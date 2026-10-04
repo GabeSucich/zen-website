@@ -14,6 +14,7 @@
         <nav class="nav-links" :class="{ open: mobileOpen }">
           <router-link to="/services" class="nav-link" @click="mobileOpen = false">Services &amp; Pricing</router-link>
           <router-link to="/appointments" class="nav-link" @click="mobileOpen = false">Appointments</router-link>
+          <router-link v-if="referralsEnabled" to="/refer" class="nav-link" @click="mobileOpen = false">Refer a Friend</router-link>
         </nav>
       </template>
     </Menubar>
@@ -25,6 +26,7 @@ import { ref, watch, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import Menubar from 'primevue/menubar'
 import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+import { referralsEnabled } from '@/composables/useFeatureFlags'
 
 const siteConfig: SiteConfig = inject(siteConfigKey)!
 
