@@ -15,8 +15,8 @@
           <router-link to="/services" class="nav-link" @click="mobileOpen = false">Services &amp; Pricing</router-link>
           <template v-if="portal.enabled">
             <router-link to="/refer" class="nav-link" @click="mobileOpen = false">Refer a Friend</router-link>
-            <a :href="portal.portalUrl('/book')" class="nav-link">Book a visit</a>
-            <a :href="portal.portalUrl('/login')" class="nav-link nav-signin">
+            <a :href="portal.portalUrl('/book')" class="nav-link nav-portal">Book a visit</a>
+            <a :href="portal.portalUrl('/login')" class="nav-link nav-portal nav-signin">
               <i class="pi pi-user" aria-hidden="true" /> Sign in
             </a>
           </template>
@@ -106,6 +106,10 @@ watch(() => route.path, () => {
   font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.03em;
+}
+
+.nav-portal {
+  white-space: nowrap;
 }
 
 .nav-signin {
