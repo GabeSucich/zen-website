@@ -29,7 +29,9 @@ With `VITE_PATIENT_PORTAL_ENABLED=true` (both Zen and Soul Space):
   **Appointments**; the home page "Start Your Journey" button goes to `<portal>/book`.
 - `/appointments` no longer loads Calendly; it explains portal booking and links to `/book`,
   `/signup` and `/login`.
-- If a `?ref=` referral code was captured, portal links carry it as `?ref=<code>`.
+- `/refer` points patients to the portal (Profile) for their referral link instead of creating one
+  in the zen_admin referral system. The portal has its own referral system; old `?ref=` codes are not
+  passed on or carried over. `?ref=` capture on this site is otherwise unchanged.
 
 With the flag off the site is unchanged (Calendly booking).
 

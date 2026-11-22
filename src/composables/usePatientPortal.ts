@@ -1,10 +1,8 @@
-import { getReferralCode } from '@/composables/useReferral'
-
 const DEFAULT_PORTAL_URL = 'https://app.zenforcewellness.com'
 const OVERRIDE_PARAM = 'patient_portal'
 const OVERRIDE_STORAGE_KEY = 'patientPortalOverride'
 
-export type PortalPath = '/book' | '/login' | '/signup'
+export type PortalPath = '/book' | '/login' | '/signup' | '/profile'
 
 /** Only the exact string 'true' turns the build-time flag on; missing or anything else is off. */
 function envEnabled(): boolean {
@@ -54,12 +52,12 @@ function portalBaseUrl(): string {
 const enabled = readOverride() ?? envEnabled()
 const baseUrl = portalBaseUrl()
 
-/** Portal link for `path`, carrying the captured marketing referral code (if any) as `?ref=`. */
+/**
+ * Portal link for `path`. Marketing-site `?ref=` codes are deliberately not passed on: the portal
+ * has its own referral system and old codes are not carried over.
+ */
 export function portalUrl(path: PortalPath): string {
-  const url = new URL(baseUrl + path)
-  const ref = getReferralCode()
-  if (ref) url.searchParams.set('ref', ref)
-  return url.href
+  return baseUrl + path
 }
 
 export function usePatientPortal() {

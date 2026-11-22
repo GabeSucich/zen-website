@@ -4,7 +4,19 @@
       <div class="refer-card">
         <h1 class="refer-title">Refer a Friend</h1>
 
-        <template v-if="!link">
+        <template v-if="portal.enabled">
+          <p class="refer-desc">
+            Referrals now live in our patient portal. Sign in and open your Profile to find your
+            personal referral link and track your rewards.
+          </p>
+          <p class="refer-desc">Not a patient yet? Create an account to get started.</p>
+          <div class="link-actions">
+            <a :href="portal.portalUrl('/profile')" class="primary-btn portal-link">Get my referral link</a>
+            <a :href="portal.portalUrl('/signup')" class="secondary-btn portal-link">Create an account</a>
+          </div>
+        </template>
+
+        <template v-else-if="!link">
           <p class="refer-desc">
             Know someone who would love {{ siteConfig.siteName }}? Enter your details to get your
             personal referral link.
@@ -83,8 +95,10 @@ import Footer from '@/components/Footer.vue'
 import mountainsBg from '@/assets/mountains.jpg'
 import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
 import { createReferralLink, ReferralSignupError } from '@/composables/useReferral'
+import { usePatientPortal } from '@/composables/usePatientPortal'
 
 const siteConfig: SiteConfig = inject(siteConfigKey)!
+const portal = usePatientPortal()
 
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
 
@@ -321,6 +335,12 @@ async function share() {
 
 .link-actions button {
   flex: 1;
+}
+
+.link-actions .portal-link {
+  flex: 1;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
