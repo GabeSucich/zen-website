@@ -83,18 +83,25 @@
     <Footer />
   </ParallaxSection>
 
-  <router-link to="/appointments" class="fab">
+  <component
+    :is="portal.enabled ? 'a' : RouterLink"
+    v-bind="portal.enabled ? { href: portal.portalUrl('/book') } : { to: '/appointments' }"
+    class="fab"
+  >
     <span class="fab-text">Start Your Journey</span>
     <svg class="fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-  </router-link>
+  </component>
 </template>
 
 <script setup lang="ts">
 import { ref, inject, onMounted, onUnmounted } from 'vue'
+import { RouterLink } from 'vue-router'
 import ParallaxSection from '@/components/ParallaxSection.vue'
 import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+import { usePatientPortal } from '@/composables/usePatientPortal'
 
 const siteConfig: SiteConfig = inject(siteConfigKey)!
+const portal = usePatientPortal()
 import WellnessCarousel from '@/components/WellnessCarousel.vue'
 import Footer from '@/components/Footer.vue'
 import mountainsBg from '@/assets/mountains.jpg'

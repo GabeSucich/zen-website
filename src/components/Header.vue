@@ -13,8 +13,17 @@
         </button>
         <nav class="nav-links" :class="{ open: mobileOpen }">
           <router-link to="/services" class="nav-link" @click="mobileOpen = false">Services &amp; Pricing</router-link>
-          <router-link to="/appointments" class="nav-link" @click="mobileOpen = false">Appointments</router-link>
-          <router-link to="/refer" class="nav-link" @click="mobileOpen = false">Refer a Friend</router-link>
+          <template v-if="portal.enabled">
+            <router-link to="/refer" class="nav-link" @click="mobileOpen = false">Refer a Friend</router-link>
+            <a :href="portal.portalUrl('/book')" class="nav-link">Book a visit</a>
+            <a :href="portal.portalUrl('/login')" class="nav-link nav-signin">
+              <i class="pi pi-user" aria-hidden="true" /> Sign in
+            </a>
+          </template>
+          <template v-else>
+            <router-link to="/appointments" class="nav-link" @click="mobileOpen = false">Appointments</router-link>
+            <router-link to="/refer" class="nav-link" @click="mobileOpen = false">Refer a Friend</router-link>
+          </template>
         </nav>
       </template>
     </Menubar>
@@ -26,8 +35,10 @@ import { ref, watch, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import Menubar from 'primevue/menubar'
 import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
+import { usePatientPortal } from '@/composables/usePatientPortal'
 
 const siteConfig: SiteConfig = inject(siteConfigKey)!
+const portal = usePatientPortal()
 
 const mobileOpen = ref(false)
 const route = useRoute()
@@ -97,7 +108,32 @@ watch(() => route.path, () => {
   letter-spacing: 0.03em;
 }
 
+.nav-signin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  margin: -0.3rem 0;
+  border: 1px solid var(--p-primary-color);
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-signin:hover {
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+}
+
+.nav-signin .pi {
+  font-size: 0.8rem;
+}
+
 @media (max-width: 768px) {
+  .nav-signin {
+    margin: 0;
+    justify-content: center;
+  }
+
   .burger {
     display: block;
   }
