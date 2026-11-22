@@ -1,6 +1,25 @@
 <template>
   <ParallaxSection :src="mountainsBg">
-    <section class="appointments">
+    <section v-if="portal.enabled" class="appointments">
+      <div class="portal-panel">
+        <h1 class="portal-title">Book your visit online</h1>
+        <p class="portal-desc">
+          Appointments with Dr. Bex are now booked through our secure patient portal. New here?
+          Create a free account first; it only takes a minute, and you'll go straight to booking
+          once you're signed in.
+        </p>
+        <p class="portal-desc">
+          Your first 45 minute consultation is always complimentary. For consult pricing and
+          membership details, see <router-link to="/services" class="accordion-link">Services &amp; Pricing</router-link>.
+        </p>
+        <div class="portal-actions">
+          <a :href="portal.portalUrl('/book')" class="portal-btn portal-btn-primary">Book a visit</a>
+          <a :href="portal.portalUrl('/signup')" class="portal-btn">Create an account</a>
+          <a :href="portal.portalUrl('/login')" class="portal-btn">Sign in</a>
+        </div>
+      </div>
+    </section>
+    <section v-else class="appointments">
       <!-- Step 1: Patient type -->
       <div v-if="!patientType" class="initial-selection">
         <button class="selection-card" @click="selectPatientType('new')">
@@ -121,8 +140,10 @@ import AccordionContent from 'primevue/accordioncontent'
 import mountainsBg from '@/assets/mountains.jpg'
 import { siteConfigKey, type SiteConfig } from '@/types/siteConfig'
 import { getReferralCode } from '@/composables/useReferral'
+import { usePatientPortal } from '@/composables/usePatientPortal'
 
 const siteConfig: SiteConfig = inject(siteConfigKey)!
+const portal = usePatientPortal()
 
 type PatientType = 'new' | 'existing'
 type Modality = 'remote' | 'in-person'
@@ -276,6 +297,68 @@ onUnmounted(() => { currentObserver?.disconnect() })
   background: var(--p-primary-color);
   color: var(--p-primary-contrast-color);
   min-height: 100vh;
+}
+
+/* Patient portal (feature flag on) */
+.portal-panel {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.portal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.portal-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.portal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.portal-btn {
+  padding: 0.75rem 1.75rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.portal-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.portal-btn-primary {
+  color: var(--p-primary-color);
+  background: #c9a84c;
+  border-color: #c9a84c;
+}
+
+.portal-btn-primary:hover {
+  background: #b8963e;
+  border-color: #b8963e;
 }
 
 /* Step 1: initial patient-type selection */
@@ -516,6 +599,14 @@ onUnmounted(() => { currentObserver?.disconnect() })
 @media (max-width: 768px) {
   .appointments {
     padding: 24px 16px;
+  }
+
+  .portal-title {
+    font-size: 2rem;
+  }
+
+  .portal-actions {
+    flex-direction: column;
   }
 
   .initial-selection {
